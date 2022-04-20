@@ -17,6 +17,7 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    NODE_PATH: "./:/opt/node_modules"
   stage: dev
   versionFunctions: true
   iamRoleStatements:
