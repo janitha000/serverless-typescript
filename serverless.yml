@@ -25,6 +25,11 @@ provider:
           - "execute-api:ManageConnections"
         Resource:
           - "arn:aws:execute-api:*:*:**/@connections/*"
+      - Effect: Allow
+        Action: 
+          - cloudformation:DescribeStacks
+        Resource: 
+          - arn:aws:cloudformation:${self:provider.region}:*
   websocketApiName: websocket-chat-${self:provider.stage}
 
   # required for websocket apis
