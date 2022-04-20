@@ -1,0 +1,25 @@
+scheduled:
+  handler: src/functions/schedules/handler.scheduledMain
+  layers: 
+    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+  events:
+    - schedule:
+        rate:
+          - rate(24 hours)
+        input:
+          key: message from lambda
+  name: serverless-typescript-dev-scheduled
+createSchedule:
+  handler: src/functions/schedules/handler.createSchedule
+  events:
+    - http:
+        method: get
+        path: schedule
+  name: serverless-typescript-dev-createSchedule
+getCloudFormationOutput:
+  handler: src/functions/schedules/handler.getCloudFormationOutput
+  events:
+    - http:
+        method: get
+        path: cloudformation
+  name: serverless-typescript-dev-getCloudFormationOutput

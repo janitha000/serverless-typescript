@@ -1,0 +1,27 @@
+hello:
+  handler: src/functions/hello/handler.hello
+  layers: 
+    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+  events:
+      - http:
+          path: hello
+          method: get
+          documentation:
+            summary: Register a new user.
+      
+
+
+
+  # events: [
+  #   {
+  #     http: {
+  #       method: 'get',
+  #       path: 'hello',
+  #       request: {
+  #         schemas: {
+  #           'application/json': schema,
+  #         },
+  #       },
+  #     },
+  #   },
+  # ],

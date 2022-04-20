@@ -1,0 +1,61 @@
+service: serverless-typescript
+frameworkVersion: '3'
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-stack-output
+  - serverless-step-functions
+  - serverless-openapi-documentation
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-southeast-1
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+  stage: dev
+  versionFunctions: true
+  iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "execute-api:ManageConnections"
+        Resource:
+          - "arn:aws:execute-api:*:*:**/@connections/*"
+  websocketApiName: websocket-chat-${self:provider.stage}
+
+  # required for websocket apis
+  # this selects from your payload what your "routeKey" parameter is
+  # from the websocket event types on your function
+  websocketApiRouteSelectionExpression: $request.body.action
+
+
+functions:
+  - ${file(./src/functions/hello/hello.yml)}
+  - ${file(./src/functions/user/user.yml)}
+  - ${file(./src/functions/schedules/schedules.yml)}
+  - ${file(./src/functions/express/express.yml)}
+  - ${file(./src/functions/websocket/websocket.yml)}
+package:
+  individually: true
+  artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: node14
+    define: {}
+    platform: node
+    concurrency: 10
+  documentation:
+    version: '1'
+    title: 'My API'
+    description: 'This is my API'
+    models: {}
+	

@@ -1,0 +1,7 @@
+expressRoutes:
+    handler: src/functions/express/handler.expressRoutes
+    events:
+      - httpApi:
+          method: ANY
+          path: /messages/{proxy+}
+    name: serverless-typescript-dev-expressRoutes

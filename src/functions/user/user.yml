@@ -1,0 +1,33 @@
+createUser:
+  handler: src/functions/user/handler.createUser
+  events:
+    - http:
+        method: post
+        path: users/
+      request:
+        schemas:
+          application/json:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+            required:
+              - firstName
+              - lastName
+  name: serverless-typescript-dev-createUser
+getUsers:
+  handler: src/functions/user/handler.getAllUsers
+  events:
+    - http:
+        method: get
+        path: users/
+  name: serverless-typescript-dev-getUsers 
+getUserById:
+  handler: src/functions/user/handler.getUserById
+  events:
+    - http:
+        method: get
+        path: users/{id}
+  name: serverless-typescript-dev-getUserById
