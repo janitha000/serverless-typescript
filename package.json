@@ -32,6 +32,7 @@
     "esbuild": "^0.14.11",
     "jest": "^27.5.1",
     "json-schema-to-ts": "^1.5.0",
+    "moment": "^2.29.3",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",
     "serverless-openapi-documentation": "^0.4.0",
@@ -43,7 +44,6 @@
   },
   "optionalDependencies": {
     "lambda-logging": "..\\serverless-common-layer\\layers\\nodejs\\node_modules\\logging"
-
   },
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT"

@@ -2,6 +2,7 @@ hello:
   handler: src/functions/hello/handler.hello
   layers: 
     - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+    - ${cf:layers-${self:provider.stage}.momentexport}
   events:
       - http:
           path: hello
