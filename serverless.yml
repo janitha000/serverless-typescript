@@ -54,6 +54,7 @@ custom:
     sourcemap: true
     exclude:
       - aws-sdk
+      - lambda-logging
     target: node14
     define: {}
     platform: node
