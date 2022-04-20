@@ -55,6 +55,7 @@ custom:
     exclude:
       - aws-sdk
       - lambda-logging
+      - moment
     target: node14
     define: {}
     platform: node
