@@ -22,4 +22,6 @@ getCloudFormationOutput:
     - http:
         method: get
         path: cloudformation
+        authorizer: custom-auth
+
   name: serverless-typescript-dev-getCloudFormationOutput

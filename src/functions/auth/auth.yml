@@ -1,0 +1,2 @@
+custom-auth:
+  handler: src/functions/auth/handler.auth

@@ -52,6 +52,7 @@ functions:
   - ${file(./src/functions/schedules/schedules.yml)}
   - ${file(./src/functions/express/express.yml)}
   - ${file(./src/functions/websocket/websocket.yml)}
+  - ${file(./src/functions/auth/auth.yml)}
 package:
   individually: true
   artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
