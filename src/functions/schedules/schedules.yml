@@ -17,7 +17,7 @@ createSchedule:
         path: schedule
   name: serverless-typescript-dev-createSchedule
 getCloudFormationOutput:
-  handler: src/functions/schedules/handler.getCloudFormationOutput
+  handler: src/functions/schedules/cloudFormation.getCloudFormationOutput
   events:
     - http:
         method: get

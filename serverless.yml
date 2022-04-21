@@ -6,7 +6,7 @@ plugins:
   - serverless-stack-output
   - serverless-step-functions
   - serverless-openapi-documentation
-  - serverless-domain-manager
+  # - serverless-domain-manager
 
 provider:
   name: aws
@@ -15,12 +15,18 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
+    metrics: true
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     NODE_PATH: "./:/opt/node_modules"
   stage: dev
   versionFunctions: true
+  logs:
+    format: '{ "requestId":"$context.requestId",   "ip": "$context.identity.sourceIp" }'
+  tracing:
+    apiGateway: true
+    lambda: true
   iamRoleStatements:
       - Effect: Allow
         Action:
@@ -58,7 +64,7 @@ custom:
     minify: false
     sourcemap: true
     exclude:
-      - aws-sdk
+      # - aws-sdk
       - lambda-logging
       - moment
     target: node14
@@ -70,13 +76,13 @@ custom:
     title: 'My API'
     description: 'This is my API'
     models: {}
-  domain:
-    dev: serverlessapidev.janithatennakoon.com
-    prod: serverlessapi.janithatennakoon.com
-  customDomain:
-    domainName: ${self:custom.domain.${opt:stage, 'dev'}}
-    basePath: "v1"
-    stage: ${self:provider.stage}
-    certificateName: "*.janithatennakoon.com"
-    createRoute53Record: true
+  # domain:
+  #   dev: serverlessapidev.janithatennakoon.com
+  #   prod: serverlessapi.janithatennakoon.com
+  # customDomain:
+  #   domainName: ${self:custom.domain.${opt:stage, 'dev'}}
+  #   basePath: "v1"
+  #   stage: ${self:provider.stage}
+  #   certificateName: "*.janithatennakoon.com"
+  #   createRoute53Record: true
 	

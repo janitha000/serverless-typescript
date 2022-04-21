@@ -1,11 +1,11 @@
 
-import { log } from 'lambda-logging'
+// import { log } from 'lambda-logging'
 import { CloudWatchEvents } from 'aws-sdk';
 import { getFormationDetails } from 'src/common/cloudFormation';
 import { apiResponse } from 'src/common/apiResponse';
 
 export const scheduledMain = async (event, context, callback) => {
-    log('INFO', 'this is from the scheduled event')
+    // log('INFO', 'this is from the scheduled event')
     console.log(event)
 
     callback(null);
@@ -13,7 +13,7 @@ export const scheduledMain = async (event, context, callback) => {
 };
 
 export const scheduledVar = async (event, context, callback) => {
-    log('INFO', 'this is from the scheduled event variable')
+    // log('INFO', 'this is from the scheduled event variable')
     console.log(event)
 
     callback(null);
@@ -56,10 +56,12 @@ export const createSchedule = async (event) => {
     });
 }
 
+
 export const getCloudFormationOutput = async () => {
     let output = await getFormationDetails();
     const exports = output.Stacks[0].Outputs;
     const funcArn = exports.find(x => x.OutputKey === "ScheduledLambdaFunctionQualifiedArn")
     return apiResponse._200({ funcArn });
 }
+
 

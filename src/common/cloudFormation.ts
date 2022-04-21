@@ -1,6 +1,6 @@
 import { CloudFormation } from 'aws-sdk';
 
-export const getFormationDetails = async (): CloudFormation.DescribeStacksOutput => {
+export const getFormationDetails = async (): Promise<CloudFormation.DescribeStacksOutput> => {
     var params = {
         StackName: 'serverless-typescript-dev' /* required */
     };
