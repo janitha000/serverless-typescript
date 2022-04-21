@@ -6,6 +6,7 @@ plugins:
   - serverless-stack-output
   - serverless-step-functions
   - serverless-openapi-documentation
+  - serverless-domain-manager
 
 provider:
   name: aws
@@ -48,6 +49,9 @@ functions:
 package:
   individually: true
   artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
+resources:
+  Resources:
+
 custom:
   esbuild:
     bundle: true
@@ -66,4 +70,13 @@ custom:
     title: 'My API'
     description: 'This is my API'
     models: {}
+  domain:
+    dev: serverlessapidev.janithatennakoon.com
+    prod: serverlessapi.janithatennakoon.com
+  customDomain:
+    domainName: ${self:custom.domain.${opt:stage, 'dev'}}
+    basePath: "v1"
+    stage: ${self:provider.stage}
+    certificateName: "*.janithatennakoon.com"
+    createRoute53Record: true
 	

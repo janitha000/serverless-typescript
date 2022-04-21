@@ -6,4 +6,9 @@ info:
   title: My API
   description: This is my API
   version: '1'
-paths: {}
+paths:
+  /hello:
+    get:
+      operationId: hello
+      summary: Register a new user.
+      responses: {}
