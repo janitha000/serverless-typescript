@@ -1,4 +1,11 @@
 service: serverless-typescript
+# params:
+#   dev:
+#     domain: serverlessapidev.janithatennakoon.com
+#     cert: '*.janithatennakoon.com'
+#   prod:
+#     domain: serverlessapi.janithatennakoon.com
+#     cert: '*.janithatennakoon.com'
 frameworkVersion: '3'
 plugins:
   - serverless-esbuild
@@ -6,7 +13,10 @@ plugins:
   - serverless-stack-output
   - serverless-step-functions
   - serverless-openapi-documentation
+  - serverless-offline-lambda
+  # - serverless-step-functions-local
   # - serverless-domain-manager
+useDotenv: true
 
 provider:
   name: aws
@@ -20,6 +30,7 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     NODE_PATH: "./:/opt/node_modules"
+    MONGODB_URL: ${env:MONGODB_URL}
   stage: dev
   versionFunctions: true
   logs:
@@ -53,6 +64,13 @@ functions:
   - ${file(./src/functions/express/express.yml)}
   - ${file(./src/functions/websocket/websocket.yml)}
   - ${file(./src/functions/auth/auth.yml)}
+  - ${file(./src/functions/step/step.yml)}
+
+stepFunctions:
+  stateMachines:
+    mapperStateMachine: ${file(./src/functions/step/state-machine.yml)}
+      
+    
 package:
   individually: true
   artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
@@ -86,4 +104,7 @@ custom:
   #   stage: ${self:provider.stage}
   #   certificateName: "*.janithatennakoon.com"
   #   createRoute53Record: true
+  stepFunctionsOffline:
+    main: mainstep
+    mapper: mapperstep
 	

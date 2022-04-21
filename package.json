@@ -5,6 +5,7 @@
   "main": "serverless.ts",
   "scripts": {
     "start": "serverless offline start",
+    "start:step": "serverless step-functions-offline",
     "deploy": "serverless deploy --stage dev --verbose",
     "deploy:func": "serverless deploy function --stage dev --verbose --function",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,7 +23,9 @@
     "mongoose": "^6.2.10",
     "serverless-http": "^3.0.1",
     "serverless-offline": "^8.5.0",
+    "serverless-offline-lambda": "^1.0.6",
     "serverless-stack-output": "^0.2.3",
+    "serverless-step-functions": "^3.7.0",
     "serverless-websockets-plugin": "^1.0.0",
     "uuid": "^8.3.2"
   },
@@ -40,7 +43,7 @@
     "serverless-domain-manager": "^6.0.3",
     "serverless-esbuild": "^1.23.3",
     "serverless-openapi-documentation": "^0.4.0",
-    "serverless-step-functions": "^3.7.0",
+    "serverless-step-functions-offline": "^2.1.4",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",

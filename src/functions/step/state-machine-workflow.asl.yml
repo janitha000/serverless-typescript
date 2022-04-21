@@ -1,0 +1,29 @@
+Comment: "A state machine I created for this article"
+StartAt: "main"
+States:
+  isDone:
+    Type: Choice
+    Choices:
+      - Variable: $.length
+        NumericGreaterThan: 0
+        Next: mapper
+    Default: Done
+  main:
+    Comment: "Lambda guard lambda function"
+    Type: Task
+    Resource: !GetAtt mainstep.Arn
+    Next: tap
+  tap:
+    Comment: "This is just to print"
+    Type: Task
+    Resource: !GetAtt tapstep.Arn
+    Next: mapper
+  mapper:
+    Comment: "Lambda guard lambda function"
+    Type: Task
+    Resource: !GetAtt mapperstep.Arn
+    Next: isDone
+  Done:
+    Type: Pass
+    End: true
+  

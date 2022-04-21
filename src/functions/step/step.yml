@@ -1,0 +1,6 @@
+mainstep:
+  handler: src/functions/step/handler.main
+mapperstep:
+  handler: src/functions/step/handler.mapper
+tapstep:
+  handler: src/functions/step/handler.tap
