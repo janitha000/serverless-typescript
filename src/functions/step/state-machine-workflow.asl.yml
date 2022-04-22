@@ -7,7 +7,7 @@ States:
       - Variable: $.length
         NumericGreaterThan: 0
         Next: mapper
-    Default: Done
+    Default: SendToQueue
   main:
     Comment: "Lambda guard lambda function"
     Type: Task
@@ -17,13 +17,42 @@ States:
     Comment: "This is just to print"
     Type: Task
     Resource: !GetAtt tapstep.Arn
+    Retry:
+      - ErrorEquals: [UserError]
+        MaxAttempts: 2
+    Catch:
+      - ErrorEquals: [UserError]
+        Next: UserError
+    ResultPath: $.tapOutput
     Next: mapper
   mapper:
     Comment: "Lambda guard lambda function"
     Type: Task
     Resource: !GetAtt mapperstep.Arn
+    Catch:
+      - ErrorEquals: [State.ALL]
+        Next: MapperError
     Next: isDone
+  SendToQueue:
+    Type: Task
+    Resource : arn:aws:states:::sqs:sendMessage.waitForTaskToken
+    Parameters: 
+      QueueUrl: !Ref StepQueue
+      MessageBody: 
+        Input.$: "$"
+        Token.$: "$$.Task.Token"
+    ResultPath: "$.queueStatus"
+    Next: Done
   Done:
     Type: Pass
+    End: true
+  UserError:
+    Type: Pass
+    Result: "No Users"
+    End: true
+  MapperError:
+    Type: Pass
+    Result: "Mapper Error"
+    ResultPath: "$.mapperStatue"
     End: true
   

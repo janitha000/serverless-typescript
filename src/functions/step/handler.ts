@@ -1,3 +1,5 @@
+import { SQSEvent } from "aws-lambda";
+import { StepFunctions } from "aws-sdk";
 
 export const main = async (event) => {
     const users: User[] = [{ name: "Janitha", age: 32 }, { name: "Vindya", age: 31 }];
@@ -6,17 +8,34 @@ export const main = async (event) => {
     return output;
 }
 
-export const mapper = async (event) => {
-    console.log(event)
-    const user = event.users.pop();
-    const eventUsers: User[] = event.users;
-    let users = eventUsers.map(user => ({ age: user.age * 2, ...user }));
-    return { users, length: event.users.length }
+export const mapper = async ({ users, length, tapOutput }) => {
+    const user = users.pop();
+    const eventUsers: User[] = users;
+    let newUsers = eventUsers.map(user => ({ age: user.age * 2, ...user }));
+    return { users: newUsers, length: newUsers.length, tapOutput }
 }
 
-export const tap = async (event) => {
-    console.log(event);
-    return { users: event.users, length: event.users.length }
+export const tap = async ({ users, length }) => {
+    console.log(users);
+    console.log(length);
+    try {
+        return "Tap step was executed"
+    }
+    catch (err) {
+        let UserError = new Error("User error");
+        throw UserError;
+    }
+}
+
+export const consumeQueue = async (event: SQSEvent) => {
+    console.log(JSON.stringify(event.Records[0].body));
+    let body = JSON.parse(event.Records[0].body);
+    const stepFunctions = new StepFunctions();
+
+    await stepFunctions.sendTaskSuccess({
+        output: JSON.stringify({ event }),
+        taskToken: body.Token
+    }).promise();
 }
 
 interface User {

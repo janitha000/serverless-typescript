@@ -56,6 +56,13 @@ provider:
   # from the websocket event types on your function
   websocketApiRouteSelectionExpression: $request.body.action
 
+resources:
+  Resources:
+    StepQueue: 
+      Type: AWS::SQS::Queue
+      Properties: 
+        QueueName: DemoQueue
+
 
 functions:
   - ${file(./src/functions/hello/hello.yml)}
@@ -74,8 +81,6 @@ stepFunctions:
 package:
   individually: true
   artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
-resources:
-  Resources:
 
 custom:
   esbuild:

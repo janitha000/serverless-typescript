@@ -1,4 +1,3 @@
-name: "state-machine"
-type: EXPRESS
+name: "state-machine-standard"
 definition: ${file(./src/functions/step/state-machine-workflow.asl.yml)}
     
