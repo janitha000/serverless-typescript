@@ -9,6 +9,21 @@ hello:
           method: get
           documentation:
             summary: Register a new user.
+errorTest:
+  handler: src/functions/hello/handler.errorTest
+  layers:
+    - ${cf:layers-${self:provider.stage}.momentexport}
+  events:
+    - http:
+        path: error
+        method: get
+
+sendEmail:
+  handler: src/functions/hello/error-email.dispatchErrors
+  events:
+    - sns: arn:aws:sns:ap-southeast-1:628640267234:Serverless-Error-Topic
+
+
       
 
 
