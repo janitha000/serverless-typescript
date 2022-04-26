@@ -9,7 +9,9 @@ phases:
     commands:
       - echo install pre build commands
       - npm install --no-optional
+      - cd layers/logger/nodejs/node_modules/logger
       - npm run compile
+      - cd ../../../..
   build:
     commands:
       - echo deployment started `date`
