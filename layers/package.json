@@ -5,7 +5,7 @@
   "main": "serverless.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile" : "tsc"
+    "deploy": "serverless deploy --stage dev --verbose",
   },
   "engines": {
     "node": ">=14.15.0"
