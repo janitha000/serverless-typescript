@@ -16,6 +16,8 @@ plugins:
   - serverless-offline-lambda
   # - serverless-step-functions-local
   - serverless-domain-manager
+  - serverless-export-outputs
+
 useDotenv: true
 
 provider:
@@ -79,6 +81,19 @@ resources:
           BlockPublicPolicy: TRUE
           IgnorePublicAcls: TRUE
           RestrictPublicBuckets: TRUE
+  Outputs:
+    ApiGatewayRestApiId:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ${self:provider.stage}-ExtApiGatewayRestApiId
+    ApiGatewayRestApiRootResourceId:
+      Value:
+          Fn::GetAtt:
+          - ApiGatewayRestApi
+          - RootResourceId 
+      Export:
+        Name: ${self:provider.stage}-ExtApiGatewayRestApiRootResourceId
 
 
 functions:
@@ -122,11 +137,14 @@ custom:
     dev: serverlessapidev.janithatennakoon.com
     prod: serverlessapi.janithatennakoon.com
   customDomain:
-    domainName: 'serverlessapidev.janithatennakoon.com' # Change this to your domain.
-    basePath: 'api' # This will be prefixed to all routes
+    domainName: ${self:custom.domain.${opt:stage, 'dev'}}
+    basePath: "v1"
     stage: ${self:provider.stage}
+    certificateName: "*.janithatennakoon.com"
     createRoute53Record: true
   stepFunctionsOffline:
     main: mainstep
     mapper: mapperstep
 	
+	
+

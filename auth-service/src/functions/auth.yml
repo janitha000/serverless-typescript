@@ -1,0 +1,10 @@
+customAuth:
+  handler: src/functions/handler.auth
+
+login:
+  handler: src/functions/handler.login
+  layers:
+  events:
+    - http:
+        path: login
+        method: get

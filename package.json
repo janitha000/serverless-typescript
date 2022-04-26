@@ -43,6 +43,7 @@
     "serverless": "^3.0.0",
     "serverless-domain-manager": "^6.0.3",
     "serverless-esbuild": "^1.23.3",
+    "serverless-export-outputs": "^1.0.2",
     "serverless-openapi-documentation": "^0.4.0",
     "serverless-step-functions-offline": "^2.1.4",
     "ts-jest": "^27.1.4",

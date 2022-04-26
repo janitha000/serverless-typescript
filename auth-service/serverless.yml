@@ -1,0 +1,42 @@
+service: auth-service
+frameworkVersion: '3'
+plugins:
+  - serverless-esbuild
+  # - serverless-domain-manager
+provider:
+  name: aws
+  runtime: nodejs14.x
+  apiGateway:
+    restApiId: !ImportValue ${self:provider.stage}-ExtApiGatewayRestApiId
+    restApiRootResourceId: !ImportValue ${self:provider.stage}-ExtApiGatewayRestApiRootResourceId
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+  stage: dev
+  region: ap-southeast-1
+  versionFunctions: true
+functions:
+  - ${file(./src/functions/auth.yml)}
+package:
+  individually: true
+  artifactsS3KeyDirname: serverless/auth-service/dev/code-artifacts
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: node14
+    define: {}
+    platform: node
+    concurrency: 10
+resources:
+  Outputs:
+    CustomAuthLambdaQualifiedArn:
+      Value: 
+        Ref: CustomAuthLambdaFunctionQualifiedArn
+      Export: 
+        Name: ${self:provider.stage}-CustomAuthLambdaFunction
