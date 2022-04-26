@@ -8,12 +8,12 @@ phases:
   pre_build:
     commands:
       - echo install pre build commands
-      - npm install --no-optional
+      - cd ${SERVICE_PATH} && npm install && cd -
   build:
     commands:
       - echo deployment started `date`
       - echo deploy serverless framework custom codebase
-      - npm run deploy
+      - cd ${SERVICE_PATH} && npm run deploy
   post_build:
     commands:
       - echo post build completed on `date`
