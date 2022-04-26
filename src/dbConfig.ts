@@ -6,7 +6,7 @@ import { connect } from "mongoose";
 
 const connectToDatabase = async () => {
     console.log('Connecting to the database...')
-    const database = await connect(process.env.MONGODB_URL);
+    await connect(process.env.MONGODB_URL);
 
 }
 
