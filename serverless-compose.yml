@@ -1,0 +1,11 @@
+services:
+  layers:
+    path: layers
+  auth:
+    path: auth-service
+    dependsOn: 
+      - layers
+  common:
+    path: common-service
+    dependsOn: 
+      - layers

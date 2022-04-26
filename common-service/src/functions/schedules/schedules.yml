@@ -24,6 +24,6 @@ getCloudFormationOutput:
         path: cloudformation
         authorizer: custom-auth
         # authorizer: !ImportValue sls-auth-service-${self:provider.stage}-CustomAuthLambdaFunctionQualifiedArn
-        # authorizer: ${cf:auth-service-${self:provider.stage}.CustomAuthLambdaFunctionQualifiedArn}
+        #authorizer: ${cf:auth-service-${self:provider.stage}.CustomAuthLambdaFunctionQualifiedArn}
 
   name: serverless-typescript-dev-getCloudFormationOutput

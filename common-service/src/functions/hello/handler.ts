@@ -13,7 +13,7 @@ export const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (e
 
   // console.log(`Time is ${moment.now()}`);
   return formatJSONResponse({
-    message: `Hello, welcome to the exciting Serverless world!`,
+    message: `Hello, this is from local development!`,
     event,
   });
 };

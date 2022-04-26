@@ -37,6 +37,6 @@ resources:
   Outputs:
     CustomAuthLambdaQualifiedArn:
       Value: 
-        Ref: CustomAuthLambdaFunctionQualifiedArn
+        Ref: CustomAuthLambdaFunction
       Export: 
         Name: ${self:provider.stage}-CustomAuthLambdaFunction
