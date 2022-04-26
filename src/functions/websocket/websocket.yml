@@ -1,7 +1,7 @@
 connect:
   handler: src/functions/websocket/handler.connectManager
   layers: 
-    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+    # - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
   events:
     - websocket:
         route: $connect
@@ -10,14 +10,14 @@ connect:
 default:
   handler: src/functions/websocket/handler.onDefault
   layers: 
-    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+    # - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
   events:
     - websocket:
         route: $default
 sendMessage:
   handler: src/functions/websocket/handler.sendMessage
   layers: 
-    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+    # - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
   events:
     - http:
         method: get

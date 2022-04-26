@@ -1,7 +1,7 @@
 scheduled:
   handler: src/functions/schedules/handler.scheduledMain
   layers: 
-    - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
+    # - ${cf:layers-${self:provider.stage}.lambdaloggingexport}
   events:
     - schedule:
         rate:

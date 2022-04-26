@@ -15,7 +15,7 @@ plugins:
   - serverless-openapi-documentation
   - serverless-offline-lambda
   # - serverless-step-functions-local
-  # - serverless-domain-manager
+  - serverless-domain-manager
 useDotenv: true
 
 provider:
@@ -29,7 +29,7 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
-    NODE_PATH: "./:/opt/node_modules"
+    NODE_PATH: "./:/opt/node_modules:/opt/nodejs"
     MONGODB_URL: ${env:MONGODB_URL}
     APP_NAME: Serverless APP
     APP_STAGE: ${opt:stage, self:provider.stage}
@@ -56,6 +56,7 @@ provider:
         Resource: 
           - arn:aws:sns:${self:provider.region}:*
           - arn:aws:cloudwatch:${self:provider.region}:*
+          # - !Join ["/",  [!Ref  FileS3.Arn/*, "*"]]
 
   websocketApiName: websocket-chat-${self:provider.stage}
   # required for websocket apis
@@ -69,6 +70,15 @@ resources:
       Type: AWS::SQS::Queue
       Properties: 
         QueueName: DemoQueue
+    FileS3:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: s3uploadbucket${self:provider.stage}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: TRUE
+          BlockPublicPolicy: TRUE
+          IgnorePublicAcls: TRUE
+          RestrictPublicBuckets: TRUE
 
 
 functions:
@@ -79,6 +89,7 @@ functions:
   - ${file(./src/functions/websocket/websocket.yml)}
   - ${file(./src/functions/auth/auth.yml)}
   - ${file(./src/functions/step/step.yml)}
+  - ${file(./src/functions/fileUpload/upload.yml)}
 
 stepFunctions:
   stateMachines:
@@ -107,15 +118,14 @@ custom:
     title: 'My API'
     description: 'This is my API'
     models: {}
-  # domain:
-  #   dev: serverlessapidev.janithatennakoon.com
-  #   prod: serverlessapi.janithatennakoon.com
-  # customDomain:
-  #   domainName: ${self:custom.domain.${opt:stage, 'dev'}}
-  #   basePath: "v1"
-  #   stage: ${self:provider.stage}
-  #   certificateName: "*.janithatennakoon.com"
-  #   createRoute53Record: true
+  domain:
+    dev: serverlessapidev.janithatennakoon.com
+    prod: serverlessapi.janithatennakoon.com
+  customDomain:
+    domainName: 'serverlessapidev.janithatennakoon.com' # Change this to your domain.
+    basePath: 'api' # This will be prefixed to all routes
+    stage: ${self:provider.stage}
+    createRoute53Record: true
   stepFunctionsOffline:
     main: mainstep
     mapper: mapperstep

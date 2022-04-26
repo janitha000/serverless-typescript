@@ -3,8 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"],
-      "/opt/nodejs/logger": ["layers/logger/nodejs/node_modules/logger"]
+      "@libs/*": ["src/libs/*"]
     }
   }
 }
