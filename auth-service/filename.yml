@@ -1,0 +1,110 @@
+---
+swagger: "2.0"
+info:
+  description: "Serverless typescript"
+  version: "2022-04-27T04:50:43Z"
+  title: "serverless-typescript-dev"
+  contact:
+    name: "Janitha Tennakoon"
+host: "serverlessapidev.janithatennakoon.com"
+basePath: "/v1"
+schemes:
+- "https"
+paths:
+  /cloudformation:
+    get:
+      responses: {}
+      security:
+      - custom-auth: []
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-getCloudFormationOutput/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /error:
+    get:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-errorTest/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /hello:
+    get:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-hello/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /login:
+    get:
+      summary: "Login method"
+      description: "login method description"
+      responses:
+        "200":
+          description: "200 response"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:auth-service-dev-login/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /preSigned:
+    post:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-preSigned/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /schedule:
+    get:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-createSchedule/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /sendMessage:
+    get:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-sendMessage/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /users:
+    get:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-getUsers/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+    post:
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-createUser/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /users/{id}:
+    get:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses: {}
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:628640267234:function:serverless-typescript-dev-getUserById/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+securityDefinitions:
+  custom-auth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    x-amazon-apigateway-authtype: "custom"
+x-amazon-apigateway-minimum-compression-size: 1024

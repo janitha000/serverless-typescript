@@ -8,3 +8,16 @@ login:
     - http:
         path: login
         method: get
+        documentation:
+          summary: "Login method"
+          description: "login method description"
+          methodResponses:
+            -
+              statusCode: "200"
+              responseBody:
+                description: "Response body description"
+            -
+              statusCode: "400"
+              responseModels:
+                "application/json": LoginInput             
+                  # - ${file(../../documentation/error-model.yml)}

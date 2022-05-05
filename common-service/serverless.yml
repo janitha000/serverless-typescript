@@ -1,22 +1,23 @@
 service: serverless-typescript
-# params:
-#   dev:
-#     domain: serverlessapidev.janithatennakoon.com
-#     cert: '*.janithatennakoon.com'
-#   prod:
-#     domain: serverlessapi.janithatennakoon.com
-#     cert: '*.janithatennakoon.com'
+params:
+  dev:
+    domain: serverlessapidev.janithatennakoon.com
+    cert: '*.janithatennakoon.com'
+  prod:
+    domain: serverlessapi.janithatennakoon.com
+    cert: '*.janithatennakoon.com'
 frameworkVersion: '3'
 plugins:
   - serverless-esbuild
+  - serverless-auto-swagger
   - serverless-offline
   - serverless-stack-output
   - serverless-step-functions
-  - serverless-openapi-documentation
   - serverless-offline-lambda
   # - serverless-step-functions-local
   - serverless-domain-manager
   - serverless-export-outputs
+  - serverless-aws-documentation
 
 useDotenv: true
 
@@ -114,7 +115,8 @@ stepFunctions:
 package:
   individually: true
   artifactsS3KeyDirname: serverless/serverless-typescript/dev/code-artifacts
-
+  patterns:
+      - swagger/**
 custom:
   esbuild:
     bundle: true
@@ -128,11 +130,7 @@ custom:
     define: {}
     platform: node
     concurrency: 10
-  documentation:
-    version: '1'
-    title: 'My API'
-    description: 'This is my API'
-    models: {}
+  documentation: ${file(../documentation/documentation.yml)}
   domain:
     dev: serverlessapidev.janithatennakoon.com
     prod: serverlessapi.janithatennakoon.com

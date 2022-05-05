@@ -1,0 +1,10 @@
+name: "ErrorResponse"
+description: "Error description"
+contentType: application/json
+schema: 
+  type: object
+  properties: 
+    message:
+      type: string
+    statudCode:
+      type: string

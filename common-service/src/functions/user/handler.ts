@@ -8,13 +8,17 @@ import { dbConnection } from '../../dbConfig'
 import { apiResponse } from 'src/common/apiResponse';
 
 
-export const getAllUsers = middyfy(async (_event): Promise<APIGatewayProxyResult> => {
+export const getAllUsers = middyfy(async (_event, context): Promise<APIGatewayProxyResult> => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
     await dbConnection();
     const users = await userService.getAllUsers();
     return formatJSONResponse({ users });
 });
 
-export const createUser: ValidatedEventAPIGatewayProxyEvent<typeof createUserSchema> = middyfy(async (event): Promise<APIGatewayProxyResult> => {
+export const createUser: ValidatedEventAPIGatewayProxyEvent<typeof createUserSchema> = middyfy(async (event, context): Promise<APIGatewayProxyResult> => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
     try {
         await dbConnection();
         const userId = v4();
@@ -29,7 +33,9 @@ export const createUser: ValidatedEventAPIGatewayProxyEvent<typeof createUserSch
     }
 })
 
-export const getUserById = middyfy(async (event): Promise<APIGatewayProxyResult> => {
+export const getUserById = middyfy(async (event, context): Promise<APIGatewayProxyResult> => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
     const id = event.pathParameters?.id;
     console.log(id)
     await dbConnection();

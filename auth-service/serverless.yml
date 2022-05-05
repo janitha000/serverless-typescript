@@ -2,6 +2,9 @@ service: auth-service
 frameworkVersion: '3'
 plugins:
   - serverless-esbuild
+  - serverless-auto-swagger
+  - serverless-aws-documentation
+
   # - serverless-domain-manager
 provider:
   name: aws
@@ -22,6 +25,8 @@ functions:
 package:
   individually: true
   artifactsS3KeyDirname: serverless/auth-service/dev/code-artifacts
+  patterns:
+    - swagger/**
 custom:
   esbuild:
     bundle: true
@@ -33,6 +38,10 @@ custom:
     define: {}
     platform: node
     concurrency: 10
+  documentation: 
+    api: ${file(../documentation/documentation.yml):api}
+    models: 
+      -  ${file(./src/functions/login-input.yml)}
 resources:
   Outputs:
     CustomAuthLambdaQualifiedArn:

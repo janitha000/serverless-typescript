@@ -1,0 +1,8 @@
+name: LoginInput
+contentType: 'application/json'
+schema:
+  type: object
+  properties:
+    userName:
+      type: string
+      description: The username of the user

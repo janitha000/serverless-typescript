@@ -6,11 +6,13 @@
   "scripts": {
     "start": "serverless offline start",
     "start:step": "serverless step-functions-offline",
+    "local": "serverless invoke local --function ",
     "deploy": "serverless deploy --stage dev --verbose",
     "deploy:func": "serverless deploy function --stage dev --verbose --function",
-    "logs": "serverless logs --function",
+    "logs": "serverless logs --f",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc"
+
   },
   "engines": {
     "node": ">=14.15.0"
@@ -43,10 +45,11 @@
     "lambda-logging": "file:..\\serverless-common-layer\\layers\\logging\\nodejs\\node_modules\\logging",
     "moment": "^2.29.3",
     "serverless": "^3.0.0",
+    "serverless-auto-swagger": "^2.4.1",
+    "serverless-aws-documentation": "^1.1.0",
     "serverless-domain-manager": "^6.0.3",
     "serverless-esbuild": "^1.23.3",
     "serverless-export-outputs": "^1.0.2",
-    "serverless-openapi-documentation": "^0.4.0",
     "serverless-step-functions-offline": "^2.1.4",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.4.0",

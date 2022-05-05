@@ -23,6 +23,9 @@ getUsers:
     - http:
         method: get
         path: users/
+        responses: 
+          300: 
+            description: Test response
   name: serverless-typescript-dev-getUsers 
 getUserById:
   handler: src/functions/user/handler.getUserById

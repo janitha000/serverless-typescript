@@ -1,0 +1,9 @@
+api:
+  info:
+    title: Test
+    description: Serverless typescript 
+    contact:
+      name: Janitha Tennakoon
+models:
+  # - ${file(./error-model.yml)}
+
